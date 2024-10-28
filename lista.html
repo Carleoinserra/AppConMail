@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<style>
+.card img {
+
+width: 200px;
+
+height: 100px;
+}
+
+
+</style>
+<script>
+
+
+window.onload = gestoreLoad;
+
+function gestoreLoad(){
+	
+	var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+	// la funzione location reload ci permette di avere un refresh automatico della pagina
+	// anche quando l'utente utilizza le frecce del browser
+	window.addEventListener('pageshow', function(event) {
+	            if (event.persisted) {
+	                location.reload();
+	            }
+	        });
+	
+	
+	async function getData() {
+	    try {
+	        // Effettua una richiesta fetch e attende la risposta
+	        const response = await fetch('/getLista');
+
+	        // Verifica se la risposta è andata a buon fine
+	        if (!response.ok) {
+	            throw new Error('Network response was not ok');
+	        }
+
+	        // Converte la risposta in formato JSON e la attende
+	        const data = await response.json();
+
+	        // Utilizza i dati ottenuti
+	        console.log(data);
+	    } catch (error) {
+	        // Gestisce eventuali errori
+	        console.error('There was a problem:', error);
+	    }
+	}
+
+	getData(); // Chiama la funzione asincrona
+	   
+}
+
+
+</script>
+
+</head>
+<body>
+<!--  Per questo esercizio abbiamo usato il framework di css materialize
+abbiamo importato i link per utilizzarli
+il primo container contiene tutti gli elementi della pagina e li fa visualizzare centrati-->
+<div class="container">
+
+<!-- Creiamo una tabella che a partire dai dati che abbiamo passato dal controller
+per ogni dipendente presenta nella crea una una riga che contiene
+una cella per il nome, una cella per il cognome, e una cella per l'immagine -->
+
+<!-- Abbiamo creato un form che risponde all rotta /process con il metodo POST  -->
+ <form action = "/buy" method = "POST">
+<table>
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Mansione</th>
+              <th>Stipendio</th>
+              <th>Seleziona</th>
+             
+          </tr>
+        </thead>
+
+        <tbody>
+       
+          <tr th:each = "item:${lista}">
+            <td th:text = "${item.nome}"></td>
+            <td th:text = "${item.mansione}"></td>
+            <td th:text = "${item.stipendio}"></td>
+            <td><input type = "number" name = "num" value = "0"></td>
+            <!-- 
+            Aggiungiamo un input di tipo numerico che ritorna il numero di dipedenti selezionati (il valore è impostato
+            di default a 0)
+            un input di tipo hidden (nascosto) con il nome del dipendente
+            
+             -->
+           
+          </tr>
+         
+         
+        </tbody>
+        
+      </table>
+      <input type = "submit" value = "Invia">
+      </form>
+      </div>
+      </body>
+      </html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action = "/conferma" method ="POST">
+<ul>
+<li th:each = "item: ${nomi}"><span th:text = "${item}"></span></li>
+</ul>
+<h3>La somma totale da pagare è  <span th:text = "${somma}"></span></h3>
+<hr>
+Inserisci la mail
+<input type = "text" name = "mail">
+<input type = "submit" value = "conferma">
+</form>
+</body>
+</html>
